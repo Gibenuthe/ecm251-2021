@@ -1,7 +1,7 @@
 # ecm251-2021
 Aulas e Projetos de Linguagens I
 # Desenvolvedor:
-## Giovanni Benuthe
+- Giovanni Benuthe
 
 # Principais Linguagens:
 - C
