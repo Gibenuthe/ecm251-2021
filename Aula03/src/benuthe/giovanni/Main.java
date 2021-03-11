@@ -9,7 +9,7 @@ public class Main {
 
     //Instancia um objeto conta
         c1 = new Conta();
-            //Poderiamos escrever em uma unica linha:  Conta c1 = new Conta();
+            //Poderíamos escrever em uma unica linha:  Conta c1 = new Conta();
 
     //Pede para a conta exibir o saldo
         c1.visualizarSaldo();
