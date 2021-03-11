@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-	// Cria um objeto do tipo conta
+	// Cria um objeto do tipo conta.
         Conta c1;
 
     //Instancia um objeto conta
