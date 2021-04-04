@@ -13,11 +13,11 @@ public class Usuarios {
     private Conta c;
 
     // Construtor
-    public Usuários(String nome, String senha, String email) {
+    public Usuarios(String nome, String senha, String email, double valor) {
         this.nome = nome;
         this.senha = senha;
         this.email = email;
-        this.c = new Conta(c.getSaldo());
+        this.c = new Conta(valor);
     }
 
     // Getters
