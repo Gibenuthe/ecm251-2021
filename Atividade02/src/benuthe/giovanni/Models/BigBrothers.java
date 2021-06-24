@@ -1,4 +1,4 @@
 package benuthe.giovanni.Models;
 
-public class BigBrothers {
+public class BigBrothers extends Membros{
 }

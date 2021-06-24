@@ -1,4 +1,4 @@
 package benuthe.giovanni.Models;
 
-public class ScriptGuys {
+public class ScriptGuys extends Membros{
 }

@@ -1,4 +1,4 @@
 package benuthe.giovanni.Models;
 
-public class MobileMembers {
+public class MobileMembers extends Membros{
 }

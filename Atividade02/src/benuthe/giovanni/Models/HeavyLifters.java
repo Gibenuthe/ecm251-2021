@@ -1,4 +1,4 @@
 package benuthe.giovanni.Models;
 
-public class HeavyLifters {
+public class HeavyLifters extends Membros{
 }
