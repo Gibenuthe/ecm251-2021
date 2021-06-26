@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"benuthe.giovanni"},{"l":"benuthe.giovanni.Enum"},{"l":"benuthe.giovanni.Interfaces"},{"l":"benuthe.giovanni.Models"}]
