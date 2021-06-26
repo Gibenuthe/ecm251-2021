@@ -2,25 +2,30 @@ package benuthe.giovanni.Models;
 
 import benuthe.giovanni.Enum.Horario;
 import benuthe.giovanni.Enum.Tipos;
-import benuthe.giovanni.Interfaces.Apresentacao;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 
 import java.io.*;
 import java.util.*;
 import java.util.Iterator;
-import java.util.function.Consumer;
+
+/**
+ * Classe principal do programa, chamada na Main.
+ * Nessa classe temos a interação com o usuario por meio dos menus de login e de escolha de opcoes.
+ * A leitura, escrita e delecao no arquivo csv sao feitas aqui.
+ */
 
 public class Sistema {
+
+    /**
+     * Criacao e inicializacao de algumas variaveis, Scanners e da lista ligada de Membros.
+     */
 
     private boolean executarSistema = true;
     Horario horarioAtual = Horario.REGULAR;
     int ExecutaBB = 0;
-    Tipos cat;
+    Tipos Cat;
     String usuarioAtual;
 
-
-    Scanner escolha = new Scanner(System.in);
+    Scanner Escolha = new Scanner(System.in);
     Scanner Nome = new Scanner(System.in);
     Scanner Email = new Scanner(System.in);
     Scanner Funcao = new Scanner(System.in);
@@ -28,26 +33,27 @@ public class Sistema {
     Scanner Horarios = new Scanner(System.in);
     Scanner Usuario = new Scanner(System.in);
 
-    
-    Iterator iterator = new Iterator() {
-        @Override
-        public boolean hasNext() {
-            return false;
-        }
-
-        @Override
-        public Object next() {
-            return null;
-        }
-    };
-
-
-    LinkedList<Membros> Membros = new LinkedList<Membros>();
+    LinkedList<Membros> Membros = new LinkedList<>();
     //ArrayList<Membros> Membros = new ArrayList<>();
 
-    //BigBrothers Juli = new BigBrothers("Julliete", "ajdf@uishd.com", Tipos.BIG_BROTHERS);
-    //Membros.add(new BigBrothers("Julliete", "ajdf@uishd.com", Tipos.BIG_BROTHERS));
 
+//    Iterator iterator = new Iterator() {
+//        @Override
+//        public boolean hasNext() {
+//            return false;
+//        }
+//
+//        @Override
+//        public Object next() {
+//            return null;
+//        }
+//    };
+
+
+    /**
+     * Metodo que, em loop, unifica as acoes a serem realizadas ao rodar o programa.
+     * @throws IOException
+     */
 
     public void executar() throws IOException{
         String opcao;
@@ -56,19 +62,23 @@ public class Sistema {
         if(ExecutaBB == 2){
             while(executarSistema) {
                 MenuPad();
-                opcao = escolha.next().toUpperCase(Locale.ROOT);
+                opcao = Escolha.next().toUpperCase(Locale.ROOT);
                 avaliarOpcaoPad(opcao);
             }
         }
         else if(ExecutaBB == 1){
             while(executarSistema) {
                 Menu();
-                opcao = escolha.next().toUpperCase(Locale.ROOT);
+                opcao = Escolha.next().toUpperCase(Locale.ROOT);
                 avaliarOpcao(opcao);
             }
         }
     }
 
+    /**
+     * Metodo que faz a leitura do arquivo csv e reconhece o nome, email e funcao,
+     * colocando-os na lista ligada Membros.
+     */
 
     public void AbrirCSV(){
         File arquivoCSV = new File("D:\\Documents\\GitHub\\ecm251-2021\\Atividade02\\src\\benuthe\\giovanni\\arquivo_super_Secreto_nao_abrir.csv");
@@ -84,20 +94,20 @@ public class Sistema {
                 String categoria = splitted[2];
                 //System.out.println("Nome: "+nome+" Email: "+email+" Categoria: "+categoria+" Tipo: "+Tipos.BIG_BROTHERS);
                 if(categoria.equals(Tipos.BIG_BROTHERS.toString())){
-                    cat = Tipos.BIG_BROTHERS;
-                    Membros.add(new BigBrothers(nome, email, cat));
+                    Cat = Tipos.BIG_BROTHERS;
+                    Membros.add(new BigBrothers(nome, email, Cat));
                 }
                 else if(categoria.equals(Tipos.HEAVY_LIFTERS.toString())){
-                    cat = Tipos.HEAVY_LIFTERS;
-                    Membros.add(new HeavyLifters(nome, email, cat));
+                    Cat = Tipos.HEAVY_LIFTERS;
+                    Membros.add(new HeavyLifters(nome, email, Cat));
                 }
                 else if(categoria.equals(Tipos.MOBILE_MEMBERS.toString())){
-                    cat = Tipos.MOBILE_MEMBERS;
-                    Membros.add(new MobileMembers(nome, email, cat));
+                    Cat = Tipos.MOBILE_MEMBERS;
+                    Membros.add(new MobileMembers(nome, email, Cat));
                 }
                 else if(categoria.equals(Tipos.SCRIPT_GUYS.toString())){
-                    cat = Tipos.SCRIPT_GUYS;
-                    Membros.add(new ScriptGuys(nome, email, cat));
+                    Cat = Tipos.SCRIPT_GUYS;
+                    Membros.add(new ScriptGuys(nome, email, Cat));
                 }
             }
         } catch (FileNotFoundException e){
@@ -105,35 +115,44 @@ public class Sistema {
         }
     }
 
-        public void Login() {
+    /**
+     * Metodo que faz a verificacao do usuario que utilizara o sistema,
+     * decidindo se este pertence aos BigBrothers, e portanto pode adicionar
+     * e remover membros, ou um usuario padrao, como HeavyLifters, MobileMembers e ScriptGuys.
+     * O login so ocorre caso o usuario exista.
+     */
+
+    public void Login() {
             System.out.println("------Tela de Login-------");
             System.out.println("Username: ");
             usuarioAtual = Usuario.next();
             for (Iterator<Membros> iter = Membros.iterator(); iter.hasNext(); ) {
                 Membros membro = iter.next();
-                if (membro.getFuncao() == Tipos.BIG_BROTHERS) {
-                    if(usuarioAtual.equals(membro.getUsername())){
+                if(usuarioAtual.equals(membro.getUsername())){
+                    if (membro.getFuncao() == Tipos.BIG_BROTHERS) {
                         System.out.println("Bem Vindo BigBrother !!");
                         ExecutaBB = 1;
                         break;
-                    }
-                }
-                else {
-                    if(usuarioAtual.equals(membro.getUsername())){
-                        System.out.println("Bem Vindo usuario padrao !");
-                        ExecutaBB = 2;
-                        break;
-                    }
-                    else {
-                        System.out.println("Usuario nao existe.");
-                        break;
+                    }else if(membro.getFuncao() != Tipos.BIG_BROTHERS){
+                            System.out.println("Bem Vindo usuario padrao !");
+                            ExecutaBB = 2;
+                            break;
                     }
                 }
             }
+            if(ExecutaBB == 0){
+                System.out.println("Usuario nao existe.");
+                Login();
+            }
         }
 
+    /**
+     * Os Menus Menu() e MenuPad() sao, respectivamente, as representacoes(print)
+     * do menu dos BigBrothers, que tem as opcoes de adicionar e remover membros,
+     * e do menu dos outros tipos de usuario que nao possuem essas opcoes listadas.
+     */
 
-        public void Menu(){
+    public void Menu(){
         System.out.println("--------------------------");
         System.out.println("B3M V1ND0 40 MAsK_S0c13ty!");
         System.out.println("---------------------------");
@@ -160,6 +179,23 @@ public class Sistema {
         System.out.println("[S]air");
 
     }
+
+    /**
+     * O metodo avaliarOpcao recebe uma String de um caractere que representa a escolha feita no menu.
+     * As escolhas sao:
+     *     Cadastro     -   Pede que o usuario cadastre um novo membro inserindo seu nome, email e funcao. Este cadastro
+     *                      ja insere o novo membro no arquivo csv.
+     *     Postar       -   Posta uma mensagem, de acordo com o horario atual, para cada membro cadastrado considerando sua categoria.
+     * Trocar Horario   -   Analisa o horario atual e pergunta se o usuario deseja troca-lo, se sim, o horario altera.
+     *     Excluir      -   Mostra uma lista dos membros e pede que o usuario insira o nome do membro a ser removido.
+     * Relatorio Geral  -   Apresenta uma frase dizendo quem pediu o relatorio e em seguida mostra todas as informacoes
+     *                      dos membros.
+     *      Sair        -   Termina o programa.
+     *     Default      -   Pede que o usuario digite um comando valido.
+     *
+     * @param opcao
+     * @throws IOException
+     */
 
     private void avaliarOpcao(String opcao) throws IOException {
         switch (opcao) {
@@ -189,18 +225,6 @@ public class Sistema {
                 for(Membros membro : Membros){
                     pw.println(membro.getUsername() + ";" + membro.getEmail() + ";" + membro.getFuncao().toString());
                 }
-//                Iterator s = Membros.iterator();
-//                while(s.hasNext()){
-//                    Membros current  = (Membros) s.next();
-//                    System.out.println(current.toString()+"\n");
-//                    pw.append(current.getUsername());
-//                    pw.append(",");
-//                    pw.append(current.getEmail());
-//                    pw.append(",");
-//                    pw.append(current.getFuncao().toString());
-//                    pw.append("\n");
-//                }
-//                pw.flush();
                 pw.close();
                 break;
             case "P":
@@ -232,8 +256,8 @@ public class Sistema {
                 break;
             case "E":
                 System.out.println("Lista de membros:");
-                for(Object o : Membros){
-                    System.out.println(o.toString());
+                for(Membros o : Membros){
+                    System.out.printf("Nome: %15s ; Funcao: %15s\n", o.getUsername(), o.getFuncao());
                 }
                 System.out.println("Digite o nome do membro que deseja excluir:");
                 String exclusao = Exclusao.next();
@@ -278,6 +302,12 @@ public class Sistema {
 
 
     }
+
+    /**
+     * O metodo avaliarOpcaoPad recebe uma String de um caractere que representa a escolha feita no menu.
+     * Suas opcoes sao as mesmas de avaliarOpcao, exceto Cadastrar e Excluir.
+     * @param opcao
+     */
 
     private void avaliarOpcaoPad(String opcao) {
         switch (opcao) {
@@ -327,70 +357,21 @@ public class Sistema {
         }
     }
 
-
-//    public String getUsername() {
-//        return benuthe.giovanni.Models.Membros.class.getName();
+// Metodos da classe Iterator que podem ser descomentados caso deseje-se usar, por exemplo, iter.remove();
+//    public boolean hasNext() {
+//        return iterator.hasNext();
+//    }
+//
+//    public Object next() {
+//        return iterator.next();
+//    }
+//
+//    public void remove() {
+//        iterator.remove();
+//    }
+//
+//    public void forEachRemaining(Consumer action) {
+//        iterator.forEachRemaining(action);
 //    }
 
-//    private Iterator<Object> iterator() {
-//    }
-
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    public Object next() {
-        return iterator.next();
-    }
-
-    public void remove() {
-        iterator.remove();
-    }
-
-    public void forEachRemaining(Consumer action) {
-        iterator.forEachRemaining(action);
-    }
-
-
-//    @Override
-//    public String toString() {
-//        String pacote = getClass().getName();
-//        String arroba = "@";
-//        String codigo = Integer.toHexString(hashCode());
-//        if (pacote == "benuthe.giovanni.Models.HeavyLifters"){
-//            pacote = "HeavyLifters";
-//        }
-//        codigo.toString();
-//        String stringloca = pacote + ";" + codigo;
-//        return stringloca;
-//    }
-
-
-//    @Override
-//    public String toString() {
-//        return getClass().getName() + "@" + Integer.toHexString(hashCode());
-//    }
-
-
-
-    /*
-    @Override
-    public String toString() {
-        Iterator<Object> i = iterator();
-        if (! i.hasNext()) {
-            return "[]";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        for (;;) {
-            Object element = i.next();
-            sb.append(e == this ? "(this Collection)" : element);
-            if (! i.hasNext()) {
-                return sb.append(']').toString();
-            }
-            sb.append(", ");
-        }
-    }
-*/
 }

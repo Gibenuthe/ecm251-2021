@@ -2,6 +2,14 @@ package benuthe.giovanni.Models;
 
 import benuthe.giovanni.Enum.Tipos;
 
+/**
+ * Classe herdada de Membros do Tipo: Big Brother
+ * Importando o Enum Tipos
+ * Com um construtor de sua classe e
+ * métodos de postar mensagem tanto para o horário regular
+ * quanto horário "extra".
+ */
+
 public class BigBrothers extends Membros{
     public BigBrothers(String username, String email, Tipos funcao) {
         super(username, email, funcao);
@@ -16,10 +24,5 @@ public class BigBrothers extends Membros{
     public void postarExtra() {
         System.out.println(getUsername() + ": ...");
     }
-
-//    @Override
-//    public void apresentar() {
-//        System.out.println("O " + getFuncao() + " " + getUsername() + " pediu este relatorio:");
-//    }
 
 }
